@@ -24,14 +24,34 @@ function App() {
     const animation=Math.round((roundedCurrent/roundedDuration)*100)
     setSongInfo({...songInfo,currentTime:current,duration,animationPercentage:animation});
   };
+  const endSongHandle=(nextSong)=>{
+    const newSongs=songs.map((song)=>{
+      if((song.id===nextSong.id))
+      {
+          return{
+              ...song,
+              active:true,
+          };
+      }
+      else{
+          return{
+              ...song,
+              active:false,
+          }
+      }
+  });
+  setSongs(newSongs);
+  }
   const songEndHandler=async()=>{
     let currentIndex=songs.findIndex((song)=>song.id===currentSong.id);
     if(currentIndex===songs.length-1){
       await setCurrentSong(songs[0]);
+      endSongHandle(songs[0]);
     }
     else{
       await setCurrentSong(songs[currentIndex+1]);
-    }
+      endSongHandle(songs[currentIndex+1]);
+    };
     if(isPlaying) audioRef.current.play();
   };
   return (
@@ -52,6 +72,7 @@ function App() {
       songs={songs} 
       setCurrentSong={setCurrentSong}
       audioRef={audioRef}
+      currentSong={currentSong}
       isPlaying={isPlaying}
       setSongs={setSongs}
       libraryStatus={libraryStatus}/>

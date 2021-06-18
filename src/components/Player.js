@@ -6,7 +6,7 @@ import {faPlay,faAngleLeft,faAngleRight,faPause} from '@fortawesome/free-solid-s
 const Player=({isPlaying,setIsPlaying,currentSong,audioRef,songInfo,setSongInfo,songs,setCurrentSong,setSongs})=>{
     const activeLibraryHandler=(nextPrev)=>{
         const newSongs=songs.map((song)=>{
-            if(song.id===nextPrev.id)
+            if((song.id===nextPrev.id))
             {
                 return{
                     ...song,
